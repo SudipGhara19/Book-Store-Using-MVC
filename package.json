@@ -1,0 +1,14 @@
+{
+  "name": "book-store-using-mvc",
+  "version": "1.0.0",
+  "description": "It is a Book Store App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.3"
+  }
+}
