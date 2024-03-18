@@ -1,24 +1,28 @@
-const addProductValidation = (req, res, next) => {
+//import body to validate data from (express-validator)
+import { body, validationResult } from "express-validator";
+
+const addProductValidation = async (req, res, next) => {
     //validate data
-    const { name, price, imageUrl } = req.body;
-    let errors = [];
+    //  1. setUp the Rules
+    const rules = [
+        body('name').notEmpty().withMessage('Name is Required!'),
+        body('price').isFloat({gt:0}).withMessage('Price should be a positive value!'),
+        body('imageUrl').isURL().withMessage('Invalid Url'),
+    ];
 
-    if(!name || name.trim() == ''){
-        errors.push('Name is required!')
-    }
+    //    2. Run those Rules
+    await Promise.all(
+        rules.map((rule) => rule.run(req))
+    );
 
-    if(!price || parseFloat(price)<1){
-        errors.push('Price must be a positive Number.')
-    }
 
-    try{
-        const validURL = new URL(imageUrl);
-    }catch(err){
-        errors.push("URL is invalid.");
-    }
+    //    3. check if there is any errors after running the rles
+    var validationErrors = validationResult(req);
 
-    if(errors.length > 0){
-        return res.render('new-product', {errorMessage: errors[0]});
+
+    //    4. if errors return the error message
+    if(!validationErrors.isEmpty()){
+        return res.render('new-product', {errorMessage: validationErrors.array()[0].msg,});
     }
 
     next();
