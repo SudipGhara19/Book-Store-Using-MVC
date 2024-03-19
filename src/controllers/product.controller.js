@@ -20,9 +20,9 @@ export default class ProductController{
     }
 
     addNewProduct(req, res){
-        
-        console.log('New book added. Book Details: ' + req.body);
-        ProductModel.add(req.body);
+        const {name, desc, price} = req.body;
+        const imageUrl = 'images/' + req.file.filename;
+        ProductModel.add(name, desc, price, imageUrl);
         var products = ProductModel.get();
         res.render('products', {products: products})
     } 

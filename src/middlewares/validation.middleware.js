@@ -7,7 +7,12 @@ const addProductValidation = async (req, res, next) => {
     const rules = [
         body('name').notEmpty().withMessage('Name is Required!'),
         body('price').isFloat({gt:0}).withMessage('Price should be a positive value!'),
-        body('imageUrl').isURL().withMessage('Invalid Url'),
+        body('imageUrl').custom((value, {req}) => {
+            if(!req.file){
+                throw new Error('Image is required.');
+            }
+            return true;
+        }),
     ];
 
     //    2. Run those Rules
