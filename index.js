@@ -23,6 +23,7 @@ server.get('/', productController.getProducts);
 server.get('/add-product', productController.getAddForm);
 server.post('/',addProductValidation, productController.addNewProduct);
 server.get('/update-product/:id', productController.getUpdateProductView);
+server.get('delete-product/:id', productController.deleteProduct)
 server.post('/update-product', productController.postUpdateProduct);
 
 server.use(express.static('src/views'));

@@ -28,7 +28,10 @@
                 <td>
                     <img src="<%= product.imageUrl %>" />
                 </td>
-                <td><a href="/update-product/<%=product.id%>" class="btn btn-warning">Update</a></td>
+                <td>
+                    <a href="/update-product/<%=product.id%>" class="btn btn-warning">Update</a>
+                    <a href="/update-product/<%=product.id%>" class="btn btn-danger">Delete</a>
+                </td>
             </tr>
             <% }) %>
 
