@@ -40,6 +40,8 @@ server.get('/add-product',auth, productController.getAddForm);
 server.get('/update-product/:id',auth, productController.getUpdateProductView);
 server.get('/register', userController.getRegister);
 server.get('/login', userController.getLogin);
+server.get('/logout', userController.logout);
+
 server.post('/',auth, uploadFile.single('imageUrl'),addProductValidation, productController.addNewProduct);
 server.post('/delete-product/:id',auth, productController.deleteProduct);
 server.post('/update-product',auth, productController.postUpdateProduct);
