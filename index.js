@@ -5,9 +5,18 @@ import path from 'path';
 import ejsLayouts from 'express-ejs-layouts';
 import {addProductValidation, addUserValidation} from './src/middlewares/validation.middleware.js';
 import { uploadFile } from './src/middlewares/file-upload.middleware.js';
+import session from 'express-session';
+import { auth } from './src/middlewares/auth.middleware.js';
 
 
 const server = express();
+server.use(session({
+    secret: 'SecretKey',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {secure: false},
+    })
+);
 
 server.use(express.static('public'));
 server.use(express.static('src/views'));
@@ -26,14 +35,14 @@ server.use(ejsLayouts);
 const productController = new ProductController();
 const userController = new UserController();
 
-server.get('/', productController.getProducts);
-server.get('/add-product', productController.getAddForm);
-server.get('/update-product/:id', productController.getUpdateProductView);
+server.get('/',auth, productController.getProducts);
+server.get('/add-product',auth, productController.getAddForm);
+server.get('/update-product/:id',auth, productController.getUpdateProductView);
 server.get('/register', userController.getRegister);
 server.get('/login', userController.getLogin);
-server.post('/',uploadFile.single('imageUrl'),addProductValidation, productController.addNewProduct);
-server.post('/delete-product/:id', productController.deleteProduct);
-server.post('/update-product', productController.postUpdateProduct);
+server.post('/',auth, uploadFile.single('imageUrl'),addProductValidation, productController.addNewProduct);
+server.post('/delete-product/:id',auth, productController.deleteProduct);
+server.post('/update-product',auth, productController.postUpdateProduct);
 server.post('/register',addUserValidation, userController.postRegister);
 server.post('/login', userController.postLogin);
 
