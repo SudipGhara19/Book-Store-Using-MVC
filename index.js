@@ -35,6 +35,7 @@ server.post('/',uploadFile.single('imageUrl'),addProductValidation, productContr
 server.post('/delete-product/:id', productController.deleteProduct);
 server.post('/update-product', productController.postUpdateProduct);
 server.post('/register',addUserValidation, userController.postRegister);
+server.post('/login', userController.postLogin);
 
 
 

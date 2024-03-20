@@ -1,5 +1,11 @@
 <h1 class="mt-5 mb-4">LogIn</h1>
 
+<% if(errorMessage){ %>
+    <div class="alert alert-danger" role="alert">
+        <%= errorMessage %>
+    </div>
+    <% } %>
+
 <form action="/login" method="post">
 
     <div class="mb-3">
