@@ -33,4 +33,24 @@ const addProductValidation = async (req, res, next) => {
     next();
 }
 
-export default addProductValidation;
+
+const addUserValidation = async(req, res, next) => {
+    const rules = [
+        body('name').notEmpty().withMessage('Name is Required!'),
+        body('email').isEmail().withMessage('Email is required!'),
+        body('password').notEmpty().withMessage('Password is required!'),
+    ];
+
+    await Promise.all(
+        rules.map((rule) => rule.run(req))
+    );
+
+    const registerErrors = validationResult(req);
+
+    if(!registerErrors.isEmpty()){
+        return res.render('register', {errorMessage: registerErrors.array()[0].msg,})
+    }
+    next();
+}
+
+export {addProductValidation, addUserValidation};

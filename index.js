@@ -3,7 +3,7 @@ import ProductController from './src/controllers/product.controller.js';
 import UserController from './src/controllers/user.controller.js';
 import path from 'path';
 import ejsLayouts from 'express-ejs-layouts';
-import addProductValidation from './src/middlewares/validation.middleware.js';
+import {addProductValidation, addUserValidation} from './src/middlewares/validation.middleware.js';
 import { uploadFile } from './src/middlewares/file-upload.middleware.js';
 
 
@@ -30,9 +30,11 @@ server.get('/', productController.getProducts);
 server.get('/add-product', productController.getAddForm);
 server.get('/update-product/:id', productController.getUpdateProductView);
 server.get('/register', userController.getRegister);
+server.get('/login', userController.getLogin);
 server.post('/',uploadFile.single('imageUrl'),addProductValidation, productController.addNewProduct);
 server.post('/delete-product/:id', productController.deleteProduct);
 server.post('/update-product', productController.postUpdateProduct);
+server.post('/register',addUserValidation, userController.postRegister);
 
 
 
